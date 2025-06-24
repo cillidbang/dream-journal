@@ -1,0 +1,30 @@
+<div class="w-full h-full flex flex-col">
+
+  <div class="h-[10%] w-full flex flex-row p-3">
+    <div>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showTagebuchForm()">
+        + Anlegen
+      </button>
+    </div>
+
+    <div>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showPages()">
+        Get Pages
+      </button>
+    </div>
+
+    <div>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="clearStorage()">
+        Clear Storage
+      </button>
+    </div>
+  </div>
+
+  <div class="h-[90%] w-full flex justify-center items-center">
+    <app-tagebuch-form
+      [showTagebuchForm]="showTagebuch"
+      (closeForm)="hideForm()">
+    </app-tagebuch-form>
+  </div>
+
+</div>

@@ -1,0 +1,16 @@
+<!-- Page Container -->
+<div class="h-full flex flex-col justify-center items-center">
+  <!-- Content -->
+  <div class="flex justify-center items-center h-[20%] w-[20%]">
+      <button (click)="logStatement()" class="p-2 mx-2 text-xl bg bg-green-500 hover:bg-sky-700 hover:cursor-pointer text-white rounded-2xl w-40 text-center">
+        OpenForm
+      </button>
+  </div>
+
+  <div>
+      <app-form-component
+        class="h-[50%] w-[50%]"
+        [showModal]="showModal">
+      </app-form-component>
+  </div>
+</div>
