@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TagebuchForm} from '../shared/tagebuch-form/tagebuch-form';
 import {JournalStorage} from '../../services/journal-storage';
+import {JournalPage} from '../interfaces/journal-page';
 
 
 interface Json {
   entrys: Entry[]
 }
+
 interface Entry {
   userId: number,
   id: number,
@@ -16,33 +18,61 @@ interface Entry {
 @Component({
   selector: 'app-landing-page',
   imports: [
-    TagebuchForm
+    TagebuchForm,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
 })
-export class LandingPage {
+export class LandingPage implements OnInit {
 
-    constructor(private storage: JournalStorage) {}
+  existingJournalPages: JournalPage[] = [];
+  selectedPage: JournalPage | undefined;
 
-    showTagebuch: boolean = false;
+  showTagebuchCreation: boolean = false;
+  viewOldPage: boolean = false;
 
-    showTagebuchForm() {
-      this.showTagebuch = true;
-      console.log(this.showTagebuch)
-    }
 
-    hideForm() {
-      this.showTagebuch = false;
-    }
 
-    clearStorage(){
-      this.storage.clearPages();
-      console.log("storage cleared.")
-    }
+  constructor(private storage: JournalStorage) {
+  }
 
-    showPages() {
-      console.log(this.storage.getPages());
-    }
+  ngOnInit() {
+    this.getExistingJournalPages();
+  }
+
+  showTagebuchForm() {
+    this.showTagebuchCreation = true;
+    console.log("creation mode: " +this.showTagebuchCreation)
+  }
+  showEditingForm() {
+    this.viewOldPage = true;
+    console.log("Editing mode: " + this.viewOldPage)
+
+  }
+
+
+  getSelectedPage(selectedPageName: string) {
+    this.selectedPage = this.existingJournalPages.find(page => page.title === selectedPageName);
+    console.log(this.selectedPage)
+  }
+
+
+  hideForm() {
+    this.showTagebuchCreation = false;
+    this.viewOldPage = false;
+  }
+
+  clearStorage() {
+    this.storage.clearPages();
+    console.log("storage cleared.")
+  }
+
+  showPages() {
+    console.log(this.storage.getPages());
+  }
+
+  getExistingJournalPages() {
+    this.existingJournalPages = this.storage.getPages();
+  }
 
 }

@@ -1,6 +1,6 @@
 <div class="w-full h-full flex flex-col">
 
-  <div class="h-[10%] w-full flex flex-row p-3">
+  <div class="h-[10%] w-full flex flex-row items-center p-3">
     <div>
       <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showTagebuchForm()">
         + Anlegen
@@ -18,13 +18,34 @@
         Clear Storage
       </button>
     </div>
+
+    <div>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showEditingForm()">
+        View Page
+      </button>
+    </div>
+
+    <nav>
+      <label for="journal-dropdown">Show Page: </label>
+      <select name="journal-dropdown" id="journal-dropdown" #journalDropdown class="p-1 bg-purple-500 text-white" (change)="getSelectedPage(journalDropdown.value)">
+        @if (existingJournalPages.length != 0) {
+          @for (journal of existingJournalPages; track $index) {
+            <option value="{{ journal.title }}">{{ journal.title }}</option>
+          }
+        }
+      </select>
+    </nav>
   </div>
 
+  //TODO Sorge dafür das die FormGroup gesetzt ist.
   <div class="h-[90%] w-full flex justify-center items-center">
-    <app-tagebuch-form
-      [showTagebuchForm]="showTagebuch"
-      (closeForm)="hideForm()">
-    </app-tagebuch-form>
+      <app-tagebuch-form
+        [showTagebuchCreationForm]="showTagebuchCreation"
+        [showTagebuchEditingForm]="viewOldPage"
+        [pageToEditFormData]="selectedPage"
+        (closeForm)="hideForm()">
+      </app-tagebuch-form>
+
   </div>
 
 </div>

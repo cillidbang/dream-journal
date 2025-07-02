@@ -1,7 +1,5 @@
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {JournalPage} from './components/interfaces/journal-page';
-import {JournalStorage} from './services/journal-storage';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +7,14 @@ import {JournalStorage} from './services/journal-storage';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit{
+export class App{
   protected title = 'test-seite';
 
-  journalPages: JournalPage[] = [];
 
-  constructor(private storage: JournalStorage) {
+  constructor() {
   }
 
-  ngOnInit() : void {
-    this.setPages();
-  }
 
-  setPages() {
-    this.journalPages = this.storage.getPages();
-  }
 
 
 }

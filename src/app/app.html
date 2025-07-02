@@ -2,28 +2,11 @@
   <header class="bg-purple-500 flex flex-col h-[100vh] w-max items-center justify-between p-3">
     <h1 class="text-white">Traumtagebuch</h1>
 
-    <nav>
-      <ul>
-        @if (journalPages.length != 0) {
-          @for (journal of journalPages; track $index) {
-            <li class="p-2 mx-2 text-xl bg bg-green-500 hover:bg-green-700 text-white rounded-2xl w-40 text-center">
-              <a>{{ journal.title }}</a>
-            </li>
-          }
-        }
-      </ul>
-    </nav>
 
     <nav>
       <ul class="flex flex-col gap-3">
         <li class="p-2 mx-2 text-xl bg bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-40 text-center">
           <a routerLink="/landing-page" routerLinkActive="active" ariaCurrentWhenActive="page">landingpage</a>
-        </li>
-        <li class="p-2 mx-2 text-xl bg bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-40 text-center">
-          <a routerLink="/login-page" routerLinkActive="active" ariaCurrentWhenActive="page">loginpage</a>
-        </li>
-        <li class="p-2 mx-2 text-xl bg bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-40 text-center disabled:">
-          <a routerLink="#" routerLinkActive="active" ariaCurrentWhenActive="page">TEST</a>
         </li>
       </ul>
     </nav>
