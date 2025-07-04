@@ -17,6 +17,7 @@ export class JournalStorage {
     };
 
     localStorage.setItem(pageTitle, JSON.stringify(pageContent))
+
   }
 
   getPage(pageTitle: string) {

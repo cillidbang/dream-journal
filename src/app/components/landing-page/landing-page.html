@@ -37,8 +37,9 @@
     </nav>
   </div>
 
-  //TODO Sorge dafür das die FormGroup gesetzt ist.
   <div class="h-[90%] w-full flex justify-center items-center">
+
+    @if (showTagebuchCreation || viewOldPage) {
       <app-tagebuch-form
         [showTagebuchCreationForm]="showTagebuchCreation"
         [showTagebuchEditingForm]="viewOldPage"
@@ -46,6 +47,7 @@
         (closeForm)="hideForm()">
       </app-tagebuch-form>
 
+    }
   </div>
 
 </div>

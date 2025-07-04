@@ -1,12 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JournalPage} from '../../interfaces/journal-page';
 import {JournalStorage} from '../../../services/journal-storage';
-import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-tagebuch-form',
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './tagebuch-form.html',
   styleUrl: './tagebuch-form.scss'
 })
@@ -18,32 +17,46 @@ export class TagebuchForm implements OnInit {
 
   @Output() closeForm = new EventEmitter<boolean>();
 
+  formValues: FormGroup | undefined;
+
+
   constructor(private storageService: JournalStorage) {
   }
 
+
   ngOnInit() {
+    console.log("form init");
+    console.log("creation: " + this.showTagebuchCreationForm);
+    console.log("editing: " + this.showTagebuchEditingForm);
+
+    this.getEmptyFormGroup();
+    console.log("form set empty")
+
     if (this.showTagebuchEditingForm) {
       this.setFormValues();
+      console.log("form values filled")
     }
   }
 
-  formValues = new FormGroup({
-    title: new FormControl(''),
-    subtitle: new FormControl(''),
-    description: new FormControl(''),
-  });
 
   setFormValues() {
 
     if (!this.pageToEditFormData) {
-      return;
+      return console.error("no page to edit.");
     }
-
-    this.formValues.controls.title.setValue(this.pageToEditFormData.title);
-    this.formValues.controls.subtitle.setValue(this.pageToEditFormData.content.subtitle);
-    this.formValues.controls.description.setValue(this.pageToEditFormData.content.description);
+    this.formValues!.controls["title"].setValue(this.pageToEditFormData.title);
+    this.formValues!.controls["subtitle"].setValue(this.pageToEditFormData.content.subtitle);
+    this.formValues!.controls["description"].setValue(this.pageToEditFormData.content.description);
 
     console.log("new")
+  }
+
+  getEmptyFormGroup() {
+    this.formValues = new FormGroup({
+      title: new FormControl(''),
+      subtitle: new FormControl(''),
+      description: new FormControl(''),
+    });
   }
 
   handleSubmit() {
@@ -56,6 +69,7 @@ export class TagebuchForm implements OnInit {
           description: this.formValues!.value.description!
         }
     }
+
     this.storageService.savePage(currentPageEntry);
     console.log("saved entry: " + this.storageService.getPage(currentPageEntry.title))
 
