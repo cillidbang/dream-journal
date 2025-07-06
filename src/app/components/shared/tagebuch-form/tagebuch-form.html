@@ -1,6 +1,6 @@
 @if (showTagebuchCreationForm || showTagebuchEditingForm) {
   @if (formValues) {
-    <form class="flex flex-col w-[200%] p-2 gap-2 bg-purple-300 " [formGroup]="formValues" (ngSubmit)="handleSubmit()">
+    <form class="flex flex-col p-2 gap-2 bg-purple-300 " [formGroup]="formValues" (ngSubmit)="handleSubmit()">
       @if (showTagebuchCreationForm) {
         <h2 class="text-center">Journal anlegen!</h2>
       } @else if (showTagebuchEditingForm) {

@@ -9,7 +9,7 @@
 
     <div>
       <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showPages()">
-        Get Pages
+        Print Pages
       </button>
     </div>
 
@@ -37,12 +37,13 @@
     </nav>
   </div>
 
-  <div class="h-[90%] w-full flex justify-center items-center">
+  <div class="h-[90%] w-full flex items-center justify-center h-screen">
 
-    @if (showTagebuchCreation || viewOldPage) {
+    @if (displayCreationForm || displayEditingForm) {
       <app-tagebuch-form
-        [showTagebuchCreationForm]="showTagebuchCreation"
-        [showTagebuchEditingForm]="viewOldPage"
+        class="w-[50%]"
+        [showTagebuchCreationForm]="displayCreationForm"
+        [showTagebuchEditingForm]="displayEditingForm"
         [pageToEditFormData]="selectedPage"
         (closeForm)="hideForm()">
       </app-tagebuch-form>

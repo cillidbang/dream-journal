@@ -4,17 +4,6 @@ import {JournalStorage} from '../../services/journal-storage';
 import {JournalPage} from '../interfaces/journal-page';
 
 
-interface Json {
-  entrys: Entry[]
-}
-
-interface Entry {
-  userId: number,
-  id: number,
-  title: string,
-  completed: boolean
-}
-
 @Component({
   selector: 'app-landing-page',
   imports: [
@@ -27,11 +16,8 @@ export class LandingPage implements OnInit {
 
   existingJournalPages: JournalPage[] = [];
   selectedPage: JournalPage | undefined;
-
-  showTagebuchCreation: boolean = false;
-  viewOldPage: boolean = false;
-
-
+  displayCreationForm: boolean = false;
+  displayEditingForm: boolean = false;
 
   constructor(private storage: JournalStorage) {
   }
@@ -41,12 +27,12 @@ export class LandingPage implements OnInit {
   }
 
   showTagebuchForm() {
-    this.showTagebuchCreation = true;
-    console.log("creation mode: " +this.showTagebuchCreation)
+    this.displayCreationForm = true;
+    console.log("creation mode: " +this.displayCreationForm)
   }
   showEditingForm() {
-    this.viewOldPage = true;
-    console.log("Editing mode: " + this.viewOldPage)
+    this.displayEditingForm = true;
+    console.log("Editing mode: " + this.displayEditingForm)
 
   }
 
@@ -58,8 +44,8 @@ export class LandingPage implements OnInit {
 
 
   hideForm() {
-    this.showTagebuchCreation = false;
-    this.viewOldPage = false;
+    this.displayCreationForm = false;
+    this.displayEditingForm = false;
   }
 
   clearStorage() {
