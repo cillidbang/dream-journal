@@ -1,19 +1,26 @@
-<div class="flex flex-row">
-  <header class="bg-purple-500 flex flex-col h-[100vh] w-max items-center justify-between p-3">
-    <h1 class="text-white">Traumtagebuch</h1>
 
+  <header class="flex flex-row justify-evenly items-center p-2 px-30 border-b-1 border-b-gray-400">
 
-    <nav>
-      <ul class="flex flex-col gap-3">
-        <li class="p-2 mx-2 text-xl bg bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-40 text-center">
-          <a routerLink="/landing-page" routerLinkActive="active" ariaCurrentWhenActive="page">landingpage</a>
+    <div class="flex flex-row items-center">
+      <img ngSrc="/logo.png" alt="logo" height="35" width="35">
+      <h1 class="text-black text-xl">Dreamjournal</h1>
+    </div>
+
+    <nav class="flex flex-row">
+      <ul class="flex flex-row gap-1">
+        <li class="p-1 text-xl hover:bg-purple-400 border-1 border-black rounded-xl w-max text-center">
+          <a routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page">Hub</a>
+        </li>
+        <li class="p-1 text-xl hover:bg-purple-400 border-1 border-black rounded-xl w-max text-center">
+          <a routerLink="overview" routerLinkActive="active" ariaCurrentWhenActive="page">Overview</a>
+        </li>
+        <li class="p-1 text-xl hover:bg-purple-400 border-1 border-black rounded-xl w-max text-center">
+          <a routerLink="#" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
         </li>
       </ul>
     </nav>
-
   </header>
-  <main class="h-[100vh] w-[89%]">
+  <main class="h-[100vh]">
     <router-outlet></router-outlet>
   </main>
-</div>
 
