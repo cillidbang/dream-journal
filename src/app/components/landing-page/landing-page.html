@@ -20,9 +20,10 @@
     <table class="w-full h-max table-fixed">
       <thead>
       <tr>
-        <th class="">Title</th>
-        <th class="">Date of Creation</th>
-        <th class="">Options</th>
+        <th></th>
+        <th>Title</th>
+        <th>Date of Creation</th>
+        <th>Options</th>
       </tr>
       </thead>
       <tbody>
@@ -33,6 +34,7 @@
         } @else {
           @for (entry of existingJournalPages; track $index) {
             <tr>
+              <td><button (click)="handleRow(entry.title)" >></button></td>
               <td>{{ entry.title }}</td>
               <td>{{ entry.date }}</td>
               <td class="flex flex-row">
@@ -43,13 +45,17 @@
               </td>
             </tr>
             <tr>
-              <!--@if (extendRow(entry.title)) {
+              @if (checkRow(entry.title)) {
                 <td colspan="3" class="bg-gray-100">
-                  <h2>{{ entry.title }}</h2>
-                  <h3>{{ entry.subtitle }}</h3>
+
+                  <p class="text-2xl text-purple-500">{{ entry.title }}</p>
+                  <br>
+                  <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
+                  <br>
                   <p>{{ entry.content }}</p>
+
                 </td>
-              }-->
+              }
             </tr>
           }
         }

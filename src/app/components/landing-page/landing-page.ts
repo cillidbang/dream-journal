@@ -32,13 +32,12 @@ export class LandingPage implements OnInit {
   }
 
 
-  extendRow(entry: string) {
-    this.handleRow(entry);
+  checkRow(entry: string) {
     return this.titelOfExtendedRows.includes(entry);
-
   }
 
-  private handleRow(entry: string) {
+
+  handleRow(entry: string) {
     if (!this.titelOfExtendedRows.includes(entry)) {
       this.titelOfExtendedRows.push(entry);
     }
