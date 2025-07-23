@@ -1,47 +1,66 @@
-<div class="w-full h-full flex flex-col">
+<div class="w-full h-full flex flex-col items-center ">
 
-  <div class="h-[10%] w-full flex flex-row items-center p-3">
+  <div class="h-[10%] w-full flex flex-row items-center justify-center p-3">
     <div>
-      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showTagebuchForm()">
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center"
+              (click)="showTagebuchForm()">
         + Anlegen
       </button>
     </div>
-
     <div>
-      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showPages()">
-        Print Pages
-      </button>
-    </div>
-
-    <div>
-      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="clearStorage()">
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center"
+              (click)="clearEntrys()">
         Clear Storage
       </button>
     </div>
-
-    <div>
-      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center" (click)="showEditingForm()">
-        View Page
-      </button>
-    </div>
-
-    <nav>
-      <label for="journal-dropdown">Show Page: </label>
-      <select name="journal-dropdown" id="journal-dropdown" #journalDropdown class="p-1 bg-purple-500 text-white" (change)="getSelectedPage(journalDropdown.value)">
-        @if (existingJournalPages.length != 0) {
-          @for (journal of existingJournalPages; track $index) {
-            <option value="{{ journal.title }}">{{ journal.title }}</option>
-          }
-        }
-      </select>
-    </nav>
   </div>
 
-  <div class="h-[90%] w-full flex items-center justify-center h-screen">
 
+  <div class="flex w-[50%] h-[151%]">
+    <table class="w-full h-max table-fixed">
+      <thead>
+      <tr>
+        <th class="">Title</th>
+        <th class="">Date of Creation</th>
+        <th class="">Options</th>
+      </tr>
+      </thead>
+      <tbody>
+        @if (existingJournalPages.length <= 0) {
+          <tr>
+            <td>Keine Einträge...</td>
+          </tr>
+        } @else {
+          @for (entry of existingJournalPages; track $index) {
+            <tr>
+              <td>{{ entry.title }}</td>
+              <td>{{ entry.date }}</td>
+              <td class="flex flex-row">
+                <img class="hover:cursor-pointer hover:border 1px solid black" (click)="editPage(entry.title)"
+                     ngSrc="/icon_edit.png" alt="" height="25" width="25">
+                <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.title)"
+                     ngSrc="/icon_delete.png" alt="" height="25" width="25">
+              </td>
+            </tr>
+            <tr>
+              <!--@if (extendRow(entry.title)) {
+                <td colspan="3" class="bg-gray-100">
+                  <h2>{{ entry.title }}</h2>
+                  <h3>{{ entry.subtitle }}</h3>
+                  <p>{{ entry.content }}</p>
+                </td>
+              }-->
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex items-center justify-center h-screen w-[50%]">
     @if (displayCreationForm || displayEditingForm) {
       <app-tagebuch-form
-        class="w-[50%]"
+        class="w-full"
         [showTagebuchCreationForm]="displayCreationForm"
         [showTagebuchEditingForm]="displayEditingForm"
         [pageToEditFormData]="selectedPage"

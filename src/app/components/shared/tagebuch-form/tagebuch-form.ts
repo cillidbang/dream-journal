@@ -25,55 +25,48 @@ export class TagebuchForm implements OnInit {
 
 
   ngOnInit() {
-    console.log("form init");
-    console.log("creation: " + this.showTagebuchCreationForm);
-    console.log("editing: " + this.showTagebuchEditingForm);
 
     this.getEmptyFormGroup();
-    console.log("form set empty")
-
     if (this.showTagebuchEditingForm) {
-      this.setFormValues();
+      this.overwriteValues();
       console.log("form values filled")
     }
   }
 
 
-  setFormValues() {
+  overwriteValues() {
+
+    console.log("overwrite page: \n")
+    console.log(this.pageToEditFormData)
 
     if (!this.pageToEditFormData) {
       return console.error("no page to edit.");
     }
     this.formValues!.controls["title"].setValue(this.pageToEditFormData.title);
-    this.formValues!.controls["subtitle"].setValue(this.pageToEditFormData.content.subtitle);
-    this.formValues!.controls["description"].setValue(this.pageToEditFormData.content.description);
+    this.formValues!.controls["subtitle"].setValue(this.pageToEditFormData.subtitle);
+    this.formValues!.controls["content"].setValue(this.pageToEditFormData.content);
 
-    console.log("new")
   }
 
   getEmptyFormGroup() {
     this.formValues = new FormGroup({
       title: new FormControl(''),
       subtitle: new FormControl(''),
-      description: new FormControl(''),
+      content: new FormControl(''),
     });
   }
 
   handleSubmit() {
-    alert(this.formValues!.value.title + ' | ' + this.formValues!.value.subtitle + ' | ' + this.formValues!.value.description);
+    alert(this.formValues!.value.title + ' | ' + this.formValues!.value.subtitle + ' | ' + this.formValues!.value.content);
 
-    const currentPageEntry: JournalPage = {
-        title: this.formValues!.value.title!,
-        content: {
-          subtitle: this.formValues!.value.subtitle!,
-          description: this.formValues!.value.description!
-        }
+    const entry: JournalPage = {
+        title: this.formValues?.value.title,
+        subtitle: this.formValues?.value.subtitle,
+        content: this.formValues?.value.content,
+        date: new Date().toISOString().slice(0, 10)
     }
 
-    this.storageService.savePage(currentPageEntry);
-    console.log("saved entry: " + this.storageService.getPage(currentPageEntry.title))
-
-
+    this.storageService.savePage(entry);
     this.closeForm.emit();
   }
 

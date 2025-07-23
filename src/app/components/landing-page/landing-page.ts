@@ -2,19 +2,23 @@ import {Component, OnInit} from '@angular/core';
 import {TagebuchForm} from '../shared/tagebuch-form/tagebuch-form';
 import {JournalStorage} from '../../services/journal-storage';
 import {JournalPage} from '../interfaces/journal-page';
+import {NgOptimizedImage} from '@angular/common';
 
 
 @Component({
   selector: 'app-landing-page',
   imports: [
     TagebuchForm,
+    NgOptimizedImage,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
 })
 export class LandingPage implements OnInit {
 
+
   existingJournalPages: JournalPage[] = [];
+  titelOfExtendedRows: string[] = [];
   selectedPage: JournalPage | undefined;
   displayCreationForm: boolean = false;
   displayEditingForm: boolean = false;
@@ -24,41 +28,57 @@ export class LandingPage implements OnInit {
 
   ngOnInit() {
     this.getExistingJournalPages();
+    /*this.existingJournalPages = this.storage.testJournalPages;*/
+  }
+
+
+  extendRow(entry: string) {
+    this.handleRow(entry);
+    return this.titelOfExtendedRows.includes(entry);
+
+  }
+
+  private handleRow(entry: string) {
+    if (!this.titelOfExtendedRows.includes(entry)) {
+      this.titelOfExtendedRows.push(entry);
+    }
+    else {
+      const index = this.titelOfExtendedRows.indexOf(entry);
+      this.titelOfExtendedRows.splice(index);
+    }
   }
 
   showTagebuchForm() {
     this.displayCreationForm = true;
-    console.log("creation mode: " +this.displayCreationForm)
   }
   showEditingForm() {
+    console.log(this.selectedPage?.content)
     this.displayEditingForm = true;
-    console.log("Editing mode: " + this.displayEditingForm)
-
   }
 
 
-  getSelectedPage(selectedPageName: string) {
+  editPage(selectedPageName: string) {
     this.selectedPage = this.existingJournalPages.find(page => page.title === selectedPageName);
-    console.log(this.selectedPage)
+    this.showEditingForm();
   }
 
+
+  delPage(entry: string) {
+    this.storage.deletePage(entry);
+  }
+
+  clearEntrys() {
+    localStorage.clear();
+  }
 
   hideForm() {
     this.displayCreationForm = false;
     this.displayEditingForm = false;
   }
 
-  clearStorage() {
-    this.storage.clearPages();
-    console.log("storage cleared.")
-  }
-
-  showPages() {
-    console.log(this.storage.getPages());
-  }
-
   getExistingJournalPages() {
     this.existingJournalPages = this.storage.getPages();
   }
 
+  protected readonly localStorage = localStorage;
 }
