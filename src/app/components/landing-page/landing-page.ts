@@ -3,6 +3,7 @@ import {TagebuchForm} from '../shared/tagebuch-form/tagebuch-form';
 import {JournalStorage} from '../../services/journal-storage';
 import {JournalPage} from '../interfaces/journal-page';
 import {NgOptimizedImage} from '@angular/common';
+import {RestConnection} from '../../services/rest-connection';
 
 
 @Component({
@@ -23,12 +24,11 @@ export class LandingPage implements OnInit {
   displayCreationForm: boolean = false;
   displayEditingForm: boolean = false;
 
-  constructor(private storage: JournalStorage) {
+  constructor(private storage: JournalStorage, private rest: RestConnection) {
   }
 
   ngOnInit() {
     this.getExistingJournalPages();
-    /*this.existingJournalPages = this.storage.testJournalPages;*/
   }
 
 
@@ -76,7 +76,9 @@ export class LandingPage implements OnInit {
   }
 
   getExistingJournalPages() {
-    this.existingJournalPages = this.storage.getPages();
+    this.rest.getJournals().subscribe(data => {
+        this.existingJournalPages = data;
+    });
   }
 
   protected readonly localStorage = localStorage;
