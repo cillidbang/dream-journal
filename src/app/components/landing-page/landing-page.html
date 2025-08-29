@@ -1,0 +1,77 @@
+<div class="w-full h-full flex flex-col items-center ">
+
+  <div class="h-[10%] w-full flex flex-row items-center justify-center p-3">
+    <div>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center"
+              (click)="showTagebuchForm()">
+        + Anlegen
+      </button>
+    </div>
+    <div>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center"
+              (click)="clearEntrys()">
+        Clear Storage
+      </button>
+    </div>
+  </div>a
+
+
+  <div class="flex w-[50%] h-[151%]">
+    <table class="w-full h-max table-fixed">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Date of Creation</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody>
+        @if (existingJournalPages.length <= 0) {
+          <tr>
+            <td>Keine Einträge...</td>
+          </tr>
+        } @else {
+          @for (entry of existingJournalPages; track $index) {
+            <tr>
+              <td><button (click)="handleRow(entry.title)" >></button></td>
+              <td>{{ entry.title }}</td>
+              <td>{{ entry.date }}</td>
+              <td class="flex flex-row">
+                <img class="hover:cursor-pointer hover:border 1px solid black" (click)="editPage(entry.title)"
+                     ngSrc="/icon_edit.png" alt="" height="25" width="25">
+                <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.title)"
+                     ngSrc="/icon_delete.png" alt="" height="25" width="25">
+              </td>
+            </tr>
+            <tr>
+              @if (checkRow(entry.title)) {
+                <td colspan="3" class="bg-gray-100">
+
+                  <p class="text-2xl text-purple-500">{{ entry.title }}</p>
+                  <br>
+                  <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
+                  <br>
+                  <p>{{ entry.content }}</p>
+
+                </td>
+              }
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex items-center justify-center h-screen w-[50%]">
+    @if (displayCreationForm || displayEditingForm) {
+      <app-tagebuch-form
+        class="w-full"
+        [showTagebuchCreationForm]="displayCreationForm"
+        [showTagebuchEditingForm]="displayEditingForm"
+        [pageToEditFormData]="selectedPage"
+        (closeForm)="hideForm()">
+      </app-tagebuch-form>
+    }
+  </div>
+</div>

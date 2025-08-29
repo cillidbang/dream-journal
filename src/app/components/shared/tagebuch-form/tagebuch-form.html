@@ -1,0 +1,23 @@
+@if (showTagebuchCreationForm || showTagebuchEditingForm) {
+  @if (formValues) {
+    <form class="flex flex-col p-2 gap-2 bg-purple-300 " [formGroup]="formValues" (ngSubmit)="handleSubmit()">
+      @if (showTagebuchCreationForm) {
+        <h2 class="text-center">Journal anlegen!</h2>
+      } @else if (showTagebuchEditingForm) {
+        <h2 class="text-center" >Journal bearbeiten!</h2>
+      }
+      <label for="title">Title </label>
+      <input  id="title" class="bg-purple-200 text-black p-1" type="text" formControlName="title">
+      <label for="subtitle">Subtitle </label>
+      <input  id="subtitle" class="bg-purple-200 text-black p-1" type="text" formControlName="subtitle">
+      <label for="description">Description </label>
+      <textarea id="description" name="description" rows="20" cols="50" formControlName="content" class="bg-purple-200 text-black p-1">
+            At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+      </textarea>
+
+      <button type="submit">Submit</button>
+      <button type="reset" (click)="close()">Cancel</button>
+    </form>
+  }
+}
+
