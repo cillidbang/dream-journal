@@ -32,35 +32,33 @@ export class LandingPage implements OnInit {
   }
 
 
-  checkRow(entry: string) {
-    return this.titelOfExtendedRows.includes(entry);
+  collapseRow(title: string) {
+
+    let collapsed = this.titelOfExtendedRows;
+    let index = collapsed.indexOf(title);
+
+    !collapsed.includes(title) ?
+      collapsed.push(title) :
+      collapsed.splice(index);
   }
 
-
-  handleRow(entry: string) {
-    if (!this.titelOfExtendedRows.includes(entry)) {
-      this.titelOfExtendedRows.push(entry);
-    }
-    else {
-      const index = this.titelOfExtendedRows.indexOf(entry);
-      this.titelOfExtendedRows.splice(index);
-    }
+  checkIfCollapsed(entry: string) {
+    return this.titelOfExtendedRows.includes(entry);
   }
 
   showTagebuchForm() {
     this.displayCreationForm = true;
   }
+
   showEditingForm() {
     console.log(this.selectedPage?.content)
     this.displayEditingForm = true;
   }
 
-
   editPage(selectedPageName: string) {
     this.selectedPage = this.existingJournalPages.find(page => page.title === selectedPageName);
     this.showEditingForm();
   }
-
 
   delPage(entry: string) {
     this.storage.deletePage(entry);

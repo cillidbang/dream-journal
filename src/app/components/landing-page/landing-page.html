@@ -34,7 +34,7 @@
         } @else {
           @for (entry of existingJournalPages; track $index) {
             <tr>
-              <td><button (click)="handleRow(entry.title)" >></button></td>
+              <td><button (click)="collapseRow(entry.title)" >></button></td>
               <td>{{ entry.title }}</td>
               <td>{{ entry.date }}</td>
               <td class="flex flex-row">
@@ -45,8 +45,8 @@
               </td>
             </tr>
             <tr>
-              @if (checkRow(entry.title)) {
-                <td colspan="3" class="bg-gray-100">
+              @if (checkIfCollapsed(entry.title)) {
+                <td colspan="4" class="bg-gray-100">
 
                   <p class="text-2xl text-purple-500">{{ entry.title }}</p>
                   <br>
@@ -63,7 +63,7 @@
     </table>
   </div>
 
-  <div class="flex items-center justify-center h-screen w-[50%]">
+  <div class="flex items-center justify-center h-screen w-[50%] z-30">
     @if (displayCreationForm || displayEditingForm) {
       <app-tagebuch-form
         class="w-full"
