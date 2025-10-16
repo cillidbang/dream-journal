@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JournalPage} from '../../interfaces/journal-page';
-import {JournalStorage} from '../../../services/journal-storage';
+import {RestConnection} from '../../../services/rest-connection';
 
 @Component({
   selector: 'app-tagebuch-form',
@@ -20,7 +20,7 @@ export class TagebuchForm implements OnInit {
   formValues: FormGroup | undefined;
 
 
-  constructor(private storageService: JournalStorage) {
+  constructor(private rest: RestConnection) {
   }
 
 
@@ -35,17 +35,12 @@ export class TagebuchForm implements OnInit {
 
 
   overwriteValues() {
-
-    console.log("overwrite page: \n")
-    console.log(this.pageToEditFormData)
-
     if (!this.pageToEditFormData) {
       return console.error("no page to edit.");
     }
     this.formValues!.controls["title"].setValue(this.pageToEditFormData.title);
     this.formValues!.controls["subtitle"].setValue(this.pageToEditFormData.subtitle);
     this.formValues!.controls["content"].setValue(this.pageToEditFormData.content);
-
   }
 
   getEmptyFormGroup() {
@@ -60,13 +55,19 @@ export class TagebuchForm implements OnInit {
     alert(this.formValues!.value.title + ' | ' + this.formValues!.value.subtitle + ' | ' + this.formValues!.value.content);
 
     const entry: JournalPage = {
+        id: this.pageToEditFormData?.id,
         title: this.formValues?.value.title,
         subtitle: this.formValues?.value.subtitle,
         content: this.formValues?.value.content,
         date: new Date().toISOString().slice(0, 10)
     }
 
-    this.storageService.savePage(entry);
+    if (this.showTagebuchCreationForm) {
+      this.rest.addJournal(entry).subscribe();
+    }
+    if (this.showTagebuchEditingForm) {
+      this.rest.editJournal(entry).subscribe();
+    }
     this.closeForm.emit();
   }
 

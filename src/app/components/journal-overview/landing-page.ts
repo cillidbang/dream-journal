@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {TagebuchForm} from '../shared/tagebuch-form/tagebuch-form';
-import {JournalStorage} from '../../services/journal-storage';
 import {JournalPage} from '../interfaces/journal-page';
 import {NgOptimizedImage} from '@angular/common';
 import {RestConnection} from '../../services/rest-connection';
@@ -24,7 +23,7 @@ export class LandingPage implements OnInit {
   displayCreationForm: boolean = false;
   displayEditingForm: boolean = false;
 
-  constructor(private storage: JournalStorage, private rest: RestConnection) {
+  constructor(private rest: RestConnection) {
   }
 
   ngOnInit() {
@@ -51,7 +50,6 @@ export class LandingPage implements OnInit {
   }
 
   showEditingForm() {
-    console.log(this.selectedPage?.content)
     this.displayEditingForm = true;
   }
 
@@ -61,16 +59,19 @@ export class LandingPage implements OnInit {
   }
 
   delPage(entry: string) {
-    this.storage.deletePage(entry);
+    const page = this.existingJournalPages.find(journal => journal.title === entry)!;
+    this.rest.deleteJournalById(page.id).subscribe();
+    this.reloadTableContent();
   }
 
   clearEntrys() {
     localStorage.clear();
   }
 
-  hideForm() {
+  afterFormSubmit() {
     this.displayCreationForm = false;
     this.displayEditingForm = false;
+    this.reloadTableContent();
   }
 
   getExistingJournalPages() {
@@ -79,5 +80,7 @@ export class LandingPage implements OnInit {
     });
   }
 
-  protected readonly localStorage = localStorage;
+  reloadTableContent() {
+    window.location.reload();
+  }
 }

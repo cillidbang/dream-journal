@@ -13,7 +13,7 @@
         Clear Storage
       </button>
     </div>
-  </div>a
+  </div>
 
 
   <div class="flex w-[50%] h-[151%]">
@@ -63,14 +63,14 @@
     </table>
   </div>
 
-  <div class="flex items-center justify-center h-screen w-[50%] z-30">
+  <div>
     @if (displayCreationForm || displayEditingForm) {
       <app-tagebuch-form
         class="w-full"
         [showTagebuchCreationForm]="displayCreationForm"
         [showTagebuchEditingForm]="displayEditingForm"
         [pageToEditFormData]="selectedPage"
-        (closeForm)="hideForm()">
+        (closeForm)="afterFormSubmit()">
       </app-tagebuch-form>
     }
   </div>

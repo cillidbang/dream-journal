@@ -1,9 +1,10 @@
 
 
 export interface JournalPage {
-  title: string
-  subtitle: string
-  date: string
-  content: string
+  id?: number;
+  title: string;
+  subtitle: string;
+  date: string;
+  content: string;
 }
 
