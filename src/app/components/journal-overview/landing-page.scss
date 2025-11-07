@@ -1,4 +1,8 @@
-
+dialog[open]{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 th, td, tr {
   padding: 0.5em;
   word-break: break-word;

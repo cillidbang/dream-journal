@@ -15,11 +15,20 @@ export class RestConnection {
   constructor(private httpClient: HttpClient) { }
 
 
-
   getJournals(): Observable<JournalPage[]> {
-
-      const url = this.BASE_URL + this.JOURNAL_DIRECTIVE + "/getAllJournals/";
+      const url = this.BASE_URL + this.JOURNAL_DIRECTIVE;
       return this.httpClient.get<JournalPage[]>(url);
+  }
 
+  addJournal(page: JournalPage): Observable<JournalPage> {
+    return this.httpClient.post<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE,page);
+  }
+
+  editJournal(page: JournalPage) {
+    return this.httpClient.put<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE,page);
+  }
+
+  deleteJournalById(id: number | undefined) {
+    return this.httpClient.delete<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE + `/${id}`);
   }
 }

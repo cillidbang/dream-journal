@@ -1,6 +1,6 @@
-<div class="w-full h-full flex flex-col items-center ">
+<div class="w-full h-full flex flex-col items-center" >
 
-  <div class="h-[10%] w-full flex flex-row items-center justify-center p-3">
+  <div class="h-[10%] w-full flex flex-row items-center justify-center p-3 mt-5">
     <div>
       <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center"
               (click)="showTagebuchForm()">
@@ -13,10 +13,8 @@
         Clear Storage
       </button>
     </div>
-  </div>a
-
-
-  <div class="flex w-[50%] h-[151%]">
+  </div>
+  <div class="flex w-[50%] h-full justify-center mt-5">
     <table class="w-full h-max table-fixed">
       <thead>
       <tr>
@@ -34,7 +32,7 @@
         } @else {
           @for (entry of existingJournalPages; track $index) {
             <tr>
-              <td><button (click)="handleRow(entry.title)" >></button></td>
+              <td><button (click)="collapseRow(entry.title)" >></button></td>
               <td>{{ entry.title }}</td>
               <td>{{ entry.date }}</td>
               <td class="flex flex-row">
@@ -45,8 +43,8 @@
               </td>
             </tr>
             <tr>
-              @if (checkRow(entry.title)) {
-                <td colspan="3" class="bg-gray-100">
+              @if (checkIfCollapsed(entry.title)) {
+                <td colspan="4" class="bg-gray-100">
 
                   <p class="text-2xl text-purple-500">{{ entry.title }}</p>
                   <br>
@@ -62,16 +60,9 @@
       </tbody>
     </table>
   </div>
-
-  <div class="flex items-center justify-center h-screen w-[50%]">
-    @if (displayCreationForm || displayEditingForm) {
-      <app-tagebuch-form
-        class="w-full"
-        [showTagebuchCreationForm]="displayCreationForm"
-        [showTagebuchEditingForm]="displayEditingForm"
-        [pageToEditFormData]="selectedPage"
-        (closeForm)="hideForm()">
-      </app-tagebuch-form>
-    }
+  <div class="w-full h-full fixed z-15" [hidden]="!displayEditingForm">
+    <dialog #dialogElement>
+      <app-journal-dialog (formSubmit)="afterFormSubmit($event)"></app-journal-dialog>
+    </dialog>
   </div>
 </div>

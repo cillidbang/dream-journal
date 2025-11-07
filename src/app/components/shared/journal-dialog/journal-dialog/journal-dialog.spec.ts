@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagebuchForm } from './tagebuch-form';
+import { JournalDialog } from './journal-dialog';
 
-describe('TagebuchForm', () => {
-  let component: TagebuchForm;
-  let fixture: ComponentFixture<TagebuchForm>;
+describe('JournalDialog', () => {
+  let component: JournalDialog;
+  let fixture: ComponentFixture<JournalDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TagebuchForm]
+      imports: [JournalDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TagebuchForm);
+    fixture = TestBed.createComponent(JournalDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
