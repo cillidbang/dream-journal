@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {TagebuchForm} from '../shared/tagebuch-form/tagebuch-form';
+import {Component, ContentChildren, OnInit} from '@angular/core';
 import {JournalPage} from '../interfaces/journal-page';
 import {NgOptimizedImage} from '@angular/common';
 import {RestConnection} from '../../services/rest-connection';
+import {FormComponent} from '../shared/form-component/form-component';
+import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
 
 
 @Component({
   selector: 'app-landing-page',
   imports: [
-    TagebuchForm,
     NgOptimizedImage,
+    JournalDialog,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
@@ -20,8 +21,9 @@ export class LandingPage implements OnInit {
   existingJournalPages: JournalPage[] = [];
   titelOfExtendedRows: string[] = [];
   selectedPage: JournalPage | undefined;
-  displayCreationForm: boolean = false;
+
   displayEditingForm: boolean = false;
+
 
   constructor(private rest: RestConnection) {
   }
@@ -46,7 +48,7 @@ export class LandingPage implements OnInit {
   }
 
   showTagebuchForm() {
-    this.displayCreationForm = true;
+    this.displayEditingForm = true;
   }
 
   showEditingForm() {
@@ -69,7 +71,6 @@ export class LandingPage implements OnInit {
   }
 
   afterFormSubmit() {
-    this.displayCreationForm = false;
     this.displayEditingForm = false;
     this.reloadTableContent();
   }
@@ -78,6 +79,10 @@ export class LandingPage implements OnInit {
     this.rest.getJournals().subscribe(data => {
         this.existingJournalPages = data;
     });
+  }
+
+  openEditDialog(element: HTMLDialogElement) {
+    element.showModal();
   }
 
   reloadTableContent() {

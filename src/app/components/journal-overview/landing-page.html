@@ -62,16 +62,5 @@
       </tbody>
     </table>
   </div>
-
-  <div>
-    @if (displayCreationForm || displayEditingForm) {
-      <app-tagebuch-form
-        class="w-full"
-        [showTagebuchCreationForm]="displayCreationForm"
-        [showTagebuchEditingForm]="displayEditingForm"
-        [pageToEditFormData]="selectedPage"
-        (closeForm)="afterFormSubmit()">
-      </app-tagebuch-form>
-    }
-  </div>
+  <app-journal-dialog [display]="this.displayEditingForm"></app-journal-dialog>
 </div>
