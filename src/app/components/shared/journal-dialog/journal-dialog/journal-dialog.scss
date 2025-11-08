@@ -1,15 +1,25 @@
-
+@reference "tailwindcss";
 
 .popup-window {
   position: fixed;
-  left: 50%;
+  top: 50%;
   right: 50%;
-  translate: -50% 50%;
-  width: 50vw;
-  height: 50vh;
+  left: 50%;
+  translate: -50% -50%;
+  width: 49vw;
+  height: 70vh;
   background-color: white;
   border-radius: 28px;
   box-shadow: #9b3fe5 2px 2px 10px;
   padding: 1em;
   overflow: hidden;
 }
+
+
+.formInput {
+  @apply bg-purple-200 p-2;
+}
+
+
+
+

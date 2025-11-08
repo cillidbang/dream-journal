@@ -1,7 +1,22 @@
+<div class="popup-window">
+  <div class="flex items-center flex-col w-full h-full">
+    <form class="w-full h-full">
+      <div class="flex flex-col w-full h-full">
 
+        <label for="title">Titel </label>
+        <input class="formInput" id="title" type="text">
 
-  <div class="popup-window">
-    <p>journal-dialog works!</p>
-    <button (click)="this.closeDialog()">Close</button>
+        <label for="subtitle">Untertitel </label>
+        <input class="formInput" id="subtitle" type="text">
+
+        <label for="content">Content </label>
+        <textarea class="formInput h-full" id="content" type="text"></textarea>
+      </div>
+    </form>
+    <div class="flex flex-row gap-5 mt-5">
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center hover:cursor-pointer" (click)="this.submitDialog()">Submit</button>
+      <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center hover:cursor-pointer" (click)="this.closeDialog()">Close</button>
+    </div>
   </div>
+</div>
 
