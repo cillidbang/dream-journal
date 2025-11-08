@@ -8,3 +8,14 @@ export interface JournalPage {
   content: string;
 }
 
+export interface FormOperationAfterSubmit {
+  page: JournalPage;
+  operation: SubmitOperation;
+}
+
+
+export enum SubmitOperation {
+    CREATE = 'create',
+    EDIT = 'edit'
+}
+

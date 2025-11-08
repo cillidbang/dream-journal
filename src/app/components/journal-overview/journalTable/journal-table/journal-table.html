@@ -1,0 +1,46 @@
+<div class="flex w-[50%] h-full justify-center mt-5">
+  <table class="w-full h-max table-fixed">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Date of Creation</th>
+      <th>Options</th>
+    </tr>
+    </thead>
+    <tbody>
+      @if (!existingJournalPages || existingJournalPages.length <= 0) {
+        <tr>
+          <td>Keine Einträge...</td>
+        </tr>
+      } @else {
+        @for (entry of existingJournalPages; track $index) {
+          <tr>
+            <td><button (click)="collapseRow(entry.title)" >></button></td>
+            <td>{{ entry.title }}</td>
+            <td>{{ formatDate(entry.date) }}</td>
+            <td class="flex flex-row">
+              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="editPage(entry.id!)"
+                   ngSrc="/icon_edit.png" alt="" height="25" width="25">
+              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
+                   ngSrc="/icon_delete.png" alt="" height="25" width="25">
+            </td>
+          </tr>
+          <tr>
+            @if (checkIfCollapsed(entry.title)) {
+              <td colspan="4" class="bg-gray-100">
+
+                <p class="text-2xl text-purple-500">{{ entry.title }}</p>
+                <br>
+                <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
+                <br>
+                <p>{{ entry.content }}</p>
+
+              </td>
+            }
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

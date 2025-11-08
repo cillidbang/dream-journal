@@ -1,29 +1,26 @@
-import {Component, ElementRef, OnInit, OnChanges, ViewChild, SimpleChanges} from '@angular/core';
-import {JournalPage} from '../interfaces/journal-page';
-import {NgOptimizedImage} from '@angular/common';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormOperationAfterSubmit, JournalPage, SubmitOperation} from '../interfaces/journal-page';
 import {RestConnection} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
+import {JournalTable} from './journalTable/journal-table/journal-table';
 
 
 @Component({
   selector: 'app-landing-page',
   imports: [
-    NgOptimizedImage,
     JournalDialog,
+    JournalTable,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
 })
-export class LandingPage implements OnInit, OnChanges {
+export class LandingPage implements OnInit {
 
   @ViewChild("dialogElement") dialog : ElementRef<HTMLDialogElement> | any;
 
-
   existingJournalPages: JournalPage[] = [];
-  titelOfExtendedRows: string[] = [];
-  selectedPage: JournalPage | undefined;
-
-  displayEditingForm: boolean = false;
+  showCreationForm: boolean = false;
+  dataForEditForm: JournalPage | undefined;
 
 
   constructor(private rest: RestConnection) {}
@@ -31,62 +28,28 @@ export class LandingPage implements OnInit, OnChanges {
   ngOnInit() {
     this.getExistingJournalPages();
   }
-
-  ngOnChanges(change: SimpleChanges) {
-
-    if (change['displayEditingForm']) {
-      console.log("CHAGE");
-    }
-
-  }
-
-
-  collapseRow(title: string) {
-
-    let collapsed = this.titelOfExtendedRows;
-    let index = collapsed.indexOf(title);
-
-    !collapsed.includes(title) ?
-      collapsed.push(title) :
-      collapsed.splice(index);
-  }
-
-  checkIfCollapsed(entry: string) {
-    return this.titelOfExtendedRows.includes(entry);
-  }
-
   showTagebuchForm() {
-    this.displayEditingForm = true;
+    this.showCreationForm = true;
     this.dialog.nativeElement.showModal();
   }
 
-  showEditingForm() {
-    this.displayEditingForm = true;
-  }
-
-  editPage(selectedPageName: string) {
-    this.selectedPage = this.existingJournalPages.find(page => page.title === selectedPageName);
-    this.showEditingForm();
-  }
-
-  delPage(entry: string) {
-    const page = this.existingJournalPages.find(journal => journal.title === entry)!;
-    this.rest.deleteJournalById(page.id).subscribe();
-    this.reloadTableContent();
-  }
-
-  clearEntrys() {
-    localStorage.clear();
-  }
-
   closeForm() {
-    this.displayEditingForm = false;
+    this.showCreationForm = false;
   }
-  submitForm(journalPage: JournalPage) {
-    this.displayEditingForm = false;
-    this.rest.addJournal(journalPage).subscribe();
+  submitForm(submit: FormOperationAfterSubmit) {
+    this.showCreationForm = false;
+    if (submit.operation === SubmitOperation.CREATE) {
+      this.rest.addJournal(submit.page).subscribe();
+    }
+    else if (submit.operation === SubmitOperation.EDIT) {
+      this.rest.editJournal(submit.page).subscribe();
+    }
   }
 
+  setPageToEdit(pageToEdit: JournalPage) {
+    this.showTagebuchForm();
+    this.dataForEditForm = pageToEdit;
+  }
 
   getExistingJournalPages() {
     this.rest.getJournals().subscribe(data => {
@@ -94,7 +57,4 @@ export class LandingPage implements OnInit, OnChanges {
     });
   }
 
-  reloadTableContent() {
-    window.location.reload();
-  }
 }
