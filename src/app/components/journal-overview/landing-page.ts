@@ -79,10 +79,14 @@ export class LandingPage implements OnInit, OnChanges {
     localStorage.clear();
   }
 
-  afterFormSubmit(event: boolean) {
+  closeForm() {
     this.displayEditingForm = false;
-    this.reloadTableContent();
   }
+  submitForm(journalPage: JournalPage) {
+    this.displayEditingForm = false;
+    this.rest.addJournal(journalPage).subscribe();
+  }
+
 
   getExistingJournalPages() {
     this.rest.getJournals().subscribe(data => {

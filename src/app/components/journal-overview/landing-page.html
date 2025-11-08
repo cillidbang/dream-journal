@@ -14,6 +14,7 @@
       </button>
     </div>
   </div>
+
   <div class="flex w-[50%] h-full justify-center mt-5">
     <table class="w-full h-max table-fixed">
       <thead>
@@ -60,9 +61,14 @@
       </tbody>
     </table>
   </div>
+
   <div class="w-full h-full fixed z-15" [hidden]="!displayEditingForm">
     <dialog #dialogElement>
-      <app-journal-dialog (formSubmit)="afterFormSubmit($event)"></app-journal-dialog>
+      <app-journal-dialog
+        (formSubmit)="submitForm($event)"
+        (closeForm)="closeForm()"
+      >
+      </app-journal-dialog>
     </dialog>
   </div>
 </div>
