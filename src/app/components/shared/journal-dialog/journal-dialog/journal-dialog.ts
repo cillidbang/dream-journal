@@ -49,6 +49,5 @@ export class JournalDialog implements OnChanges{
       else {
         this.formSubmit.emit({page: this.inputValues!, operation: SubmitOperation.CREATE});
       }
-      window.location.reload();
     }
 }

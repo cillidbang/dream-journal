@@ -3,6 +3,7 @@ import {FormOperationAfterSubmit, JournalPage, SubmitOperation} from '../interfa
 import {RestConnection} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
 import {JournalTable} from './journalTable/journal-table/journal-table';
+import {MessageToaster} from '../shared/message-toaster/message-toaster';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {JournalTable} from './journalTable/journal-table/journal-table';
   imports: [
     JournalDialog,
     JournalTable,
+    MessageToaster,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
@@ -21,9 +23,20 @@ export class LandingPage implements OnInit {
   existingJournalPages: JournalPage[] = [];
   showCreationForm: boolean = false;
   dataForEditForm: JournalPage | undefined;
+  showToast: boolean = false;
 
 
   constructor(private rest: RestConnection) {}
+
+
+  showMessageToaster() {
+    this.showToast = true;
+
+    setTimeout(() => {
+      this.showToast = false;
+    }, 5000);
+
+  }
 
   ngOnInit() {
     this.getExistingJournalPages();
@@ -44,6 +57,7 @@ export class LandingPage implements OnInit {
     else if (submit.operation === SubmitOperation.EDIT) {
       this.rest.editJournal(submit.page).subscribe();
     }
+    this.showMessageToaster();
   }
 
   setPageToEdit(pageToEdit: JournalPage) {
