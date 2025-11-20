@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-message-toaster',
@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './message-toaster.scss'
 })
 export class MessageToaster {
+
+  @Input() error: boolean = false;
 
 }

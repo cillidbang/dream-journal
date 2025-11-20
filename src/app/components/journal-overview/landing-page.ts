@@ -25,6 +25,8 @@ export class LandingPage implements OnInit {
   dataForEditForm: JournalPage | undefined;
   showToast: boolean = false;
 
+  responseStatus: boolean = false;
+
 
   constructor(private rest: RestConnection) {}
 
