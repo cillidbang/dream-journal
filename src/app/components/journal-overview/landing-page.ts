@@ -48,9 +48,9 @@ export class LandingPage implements OnInit {
 
   closeForm() {
     this.showCreationForm = false;
+    this.dialog.nativeElement.close();
   }
   submitForm(submit: FormOperationAfterSubmit) {
-    this.showCreationForm = false;
     if (submit.operation === SubmitOperation.CREATE) {
       this.rest.addJournal(submit.page).subscribe();
     }
@@ -58,6 +58,8 @@ export class LandingPage implements OnInit {
       this.rest.editJournal(submit.page).subscribe();
     }
     this.showMessageToaster();
+    this.showCreationForm = false;
+    this.dialog.nativeElement.close();
   }
 
   setPageToEdit(pageToEdit: JournalPage) {
