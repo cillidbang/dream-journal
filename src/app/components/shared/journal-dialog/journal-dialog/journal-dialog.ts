@@ -10,7 +10,7 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './journal-dialog.html',
   styleUrl: './journal-dialog.scss'
 })
-export class JournalDialog implements OnChanges{
+export class JournalDialog implements OnChanges {
     @Input() display: boolean = false;
     @Input() pageToEditData: JournalPage | undefined;
     @Output() formSubmit: EventEmitter<FormOperationAfterSubmit> = new EventEmitter;

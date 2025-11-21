@@ -1,10 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-message-toaster',
   imports: [
-    NgClass
   ],
   templateUrl: './message-toaster.html',
   styleUrl: './message-toaster.scss'

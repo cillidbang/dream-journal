@@ -2,7 +2,6 @@
   <table class="w-full h-max table-fixed">
     <thead>
     <tr>
-      <th></th>
       <th>Title</th>
       <th>Date of Creation</th>
       <th>Options</th>
@@ -15,11 +14,10 @@
         </tr>
       } @else {
         @for (entry of existingJournalPages; track $index) {
-          <tr>
-            <td><button (click)="collapseRow(entry.title)" >></button></td>
+          <tr class="hover:border-purple-500" (click)="collapseRow(entry.title)">
             <td>{{ entry.title }}</td>
-            <td>{{ formatDate(entry.date) }}</td>
-            <td class="flex flex-row">
+            <td class="text-center">{{ formatDate(entry.date) }}</td>
+            <td class="flex flex-row justify-center">
               <img class="hover:cursor-pointer hover:border 1px solid black" (click)="editPage(entry.id!)"
                    ngSrc="/icon_edit.png" alt="" height="25" width="25">
               <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
@@ -28,13 +26,13 @@
           </tr>
           <tr>
             @if (checkIfCollapsed(entry.title)) {
-              <td colspan="4" class="bg-gray-100">
+              <td colspan="3" class="bg-gray-100">
 
-                <p class="text-2xl text-purple-500">{{ entry.title }}</p>
+                <p class="text-center text-2xl text-purple-500">{{ entry.title }}</p>
                 <br>
                 <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
                 <br>
-                <p>{{ entry.content }}</p>
+                <p class="p-5">{{ entry.content }}</p>
 
               </td>
             }
