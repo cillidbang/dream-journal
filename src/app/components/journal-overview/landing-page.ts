@@ -25,14 +25,14 @@ export class LandingPage implements OnInit {
   dataForEditForm: JournalPage | undefined;
   showToast: boolean = false;
 
-  responseStatus: boolean = false;
+  responseStatus: boolean = true;
 
 
   constructor(private rest: RestConnection) {}
 
 
-  showMessageToaster() {
-    this.showToast = true;
+  showMessageToaster(status: boolean) {
+    this.showToast = status;
 
     setTimeout(() => {
       this.showToast = false;
@@ -54,12 +54,15 @@ export class LandingPage implements OnInit {
   }
   submitForm(submit: FormOperationAfterSubmit) {
     if (submit.operation === SubmitOperation.CREATE) {
-      this.rest.addJournal(submit.page).subscribe();
+      this.rest.addJournal(submit.page).subscribe(s => {
+        this.showMessageToaster(s.ok);
+      });
     }
     else if (submit.operation === SubmitOperation.EDIT) {
-      this.rest.editJournal(submit.page).subscribe();
+      this.rest.editJournal(submit.page).subscribe(s => {
+        this.showMessageToaster(s.ok);
+      });
     }
-    this.showMessageToaster();
     this.showCreationForm = false;
     this.dialog.nativeElement.close();
   }
