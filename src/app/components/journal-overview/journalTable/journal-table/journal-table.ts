@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {JournalPage} from '../../../interfaces/journal-page';
 import {RestConnection} from '../../../../services/rest-connection';
+import {ImageViewer} from '../../../shared/image-viewer/image-viewer';
 
 @Component({
   selector: 'app-journal-table',
@@ -15,6 +16,7 @@ export class JournalTable {
 
   @Input() existingJournalPages: JournalPage[] | undefined;
   @Input() diplayCreationForm: boolean | undefined;
+  @Input() imageViewer!: ImageViewer;
 
   @Output() editFormData: EventEmitter<JournalPage> = new EventEmitter();
 
@@ -36,12 +38,15 @@ export class JournalTable {
     window.location.reload();
   }
 
-  generateImages(id: number) {
+  generateImages(page: JournalPage) {
       //use the image generate endpoint, already done in backend.
+      this.rest.generateImagesForJournal(page).subscribe();
   }
 
-  viewImages(id: number) {
+  getImagesForPage(page:  JournalPage) {
       //create an component "imageViewer" fetching images from backend and showing.
+      this.imageViewer.open();
+      /*this.rest.getImagesForJorunalId(page).subscribe();*/
   }
 
   collapseRow(title: string) {

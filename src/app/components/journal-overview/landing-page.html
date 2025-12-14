@@ -1,4 +1,4 @@
-<div class="w-full h-full flex flex-col items-center" >
+<div class="w-full h-full flex flex-col items-center " >
 
   <div class="h-[10%] w-full flex flex-row items-center justify-center p-3 mt-5">
     <div>
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <app-journal-table class="flex justify-center" (editFormData)="setPageToEdit($event)" [existingJournalPages]="existingJournalPages" [diplayCreationForm]="showCreationForm">
+  <app-journal-table class="flex justify-center" [imageViewer]="imageViewer!" (editFormData)="setPageToEdit($event)" [existingJournalPages]="existingJournalPages" [diplayCreationForm]="showCreationForm">
 
   </app-journal-table>
 
@@ -27,4 +27,5 @@
                        [responseStatus] ="responseStatus"
                        [hidden]="!showToast">
   </app-message-toaster>
+  <app-image-viewer class="w-auto h-auto "#imageViewer></app-image-viewer>
 </div>

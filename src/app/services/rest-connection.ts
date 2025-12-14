@@ -10,10 +10,10 @@ export class RestConnection {
 
   BASE_URL: string = "http://localhost:8080";
   JOURNAL_DIRECTIVE: string = "/journal";
+  IMAGE_DIRECTIVE: string = "/image";
 
 
   constructor(private httpClient: HttpClient) { }
-
 
   getJournals(): Observable<JournalPage[]> {
       const url = this.BASE_URL + this.JOURNAL_DIRECTIVE;
@@ -31,4 +31,12 @@ export class RestConnection {
   deleteJournalById(id: number | undefined) : Observable<any> {
     return this.httpClient.delete<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE + `/${id}`, {observe: "response"});
   }
+
+  generateImagesForJournal(page: JournalPage) {
+    return this.httpClient.post<String>(this.BASE_URL + this.IMAGE_DIRECTIVE, page, {observe: "response"});
+  }
+  getImagesForJorunalId(page: JournalPage) {
+    return this.httpClient.get<String>(this.BASE_URL + this.IMAGE_DIRECTIVE + `/${page.id!}`, {observe: "response"});
+  }
+
 }

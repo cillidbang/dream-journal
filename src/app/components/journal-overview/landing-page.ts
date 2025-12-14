@@ -4,6 +4,7 @@ import {RestConnection} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
 import {JournalTable} from './journalTable/journal-table/journal-table';
 import {MessageToaster} from '../shared/message-toaster/message-toaster';
+import {ImageViewer} from '../shared/image-viewer/image-viewer';
 
 
 @Component({
@@ -12,6 +13,7 @@ import {MessageToaster} from '../shared/message-toaster/message-toaster';
     JournalDialog,
     JournalTable,
     MessageToaster,
+    ImageViewer,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
@@ -19,13 +21,14 @@ import {MessageToaster} from '../shared/message-toaster/message-toaster';
 export class LandingPage implements OnInit {
 
   @ViewChild("dialogElement") dialog : ElementRef<HTMLDialogElement> | any;
+  @ViewChild("imageViewer") image : ElementRef<HTMLElement> | any;
 
   existingJournalPages: JournalPage[] = [];
   showCreationForm: boolean = false;
   dataForEditForm: JournalPage | undefined;
   showToast: boolean = false;
-
   responseStatus: boolean = true;
+
 
 
   constructor(private rest: RestConnection) {}
