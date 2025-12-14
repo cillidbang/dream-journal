@@ -36,6 +36,14 @@ export class JournalTable {
     window.location.reload();
   }
 
+  generateImages(id: number) {
+      //use the image generate endpoint, already done in backend.
+  }
+
+  viewImages(id: number) {
+      //create an component "imageViewer" fetching images from backend and showing.
+  }
+
   collapseRow(title: string) {
     let index = this.titelOfExtendedRows.indexOf(title);
 

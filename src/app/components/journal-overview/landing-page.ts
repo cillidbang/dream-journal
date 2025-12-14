@@ -56,6 +56,7 @@ export class LandingPage implements OnInit {
     if (submit.operation === SubmitOperation.CREATE) {
       this.rest.addJournal(submit.page).subscribe(s => {
         this.showMessageToaster(s.ok);
+        console.log(s.ok)
       });
     }
     else if (submit.operation === SubmitOperation.EDIT) {

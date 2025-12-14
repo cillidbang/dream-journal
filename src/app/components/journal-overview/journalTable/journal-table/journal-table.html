@@ -21,19 +21,21 @@
               <img class="hover:cursor-pointer hover:border 1px solid black" (click)="editPage(entry.id!)"
                    ngSrc="/icon_edit.png" alt="" height="25" width="25">
               <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
-                   ngSrc="/icon_delete.png" alt="" height="25" width="25">
+                   ngSrc="/icon_delete.png" alt="" height="25" width="25" >
+              <img class="hover:cursor-pointer hover:border 1px solid black" height="25" width="25" (click)="generateImages(entry.id!)"
+                   ngSrc="/artificial-intelligence-ai-icon.png" alt="">
+              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="viewImages(entry.id!)"
+                   ngSrc="/11698497.png" alt="" height="25" width="25">
             </td>
           </tr>
           <tr>
             @if (checkIfCollapsed(entry.title)) {
               <td colspan="3" class="bg-gray-100">
-
                 <p class="text-center text-2xl text-purple-500">{{ entry.title }}</p>
                 <br>
                 <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
                 <br>
                 <p class="p-5">{{ entry.content }}</p>
-
               </td>
             }
           </tr>
