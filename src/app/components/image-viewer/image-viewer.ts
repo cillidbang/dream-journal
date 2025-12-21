@@ -4,7 +4,6 @@ import {NgOptimizedImage} from '@angular/common';
 @Component({
   selector: 'app-image-viewer',
   imports: [
-    NgOptimizedImage
   ],
   templateUrl: './image-viewer.html',
   styleUrl: './image-viewer.scss'

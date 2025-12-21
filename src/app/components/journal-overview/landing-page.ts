@@ -2,9 +2,10 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormOperationAfterSubmit, JournalPage, SubmitOperation} from '../interfaces/journal-page';
 import {RestConnection} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
-import {JournalTable} from './journalTable/journal-table/journal-table';
 import {MessageToaster} from '../shared/message-toaster/message-toaster';
-import {ImageViewer} from '../shared/image-viewer/image-viewer';
+import {ImageViewer} from '../image-viewer/image-viewer';
+import {JournalTable} from './journal-table/journal-table';
+
 
 
 @Component({

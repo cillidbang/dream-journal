@@ -36,7 +36,7 @@ export class RestConnection {
     return this.httpClient.post<String>(this.BASE_URL + this.IMAGE_DIRECTIVE, page, {observe: "response"});
   }
   getImagesForJorunalId(page: JournalPage) {
-    return this.httpClient.get<String>(this.BASE_URL + this.IMAGE_DIRECTIVE + `/${page.id!}`, {observe: "response"});
+    return this.httpClient.get<any>(this.BASE_URL + this.IMAGE_DIRECTIVE + `/${page.id!}`, {observe: "response"});
   }
 
 }
