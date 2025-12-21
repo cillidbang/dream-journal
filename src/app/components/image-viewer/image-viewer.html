@@ -1,0 +1,17 @@
+
+  <dialog #dialog>
+
+    <div class="bg-white w-[500px] min-h-[500px]">
+      <div class="h-[40px] flex justify-end">
+        <button  class="w-[50px] h-[50px] hover:cursor-pointer hover:bg-red-500" (click)="close()">X</button>
+      </div>
+      <div class="flex-1">
+        @for (image of this.getFormattedImages(); track $index) {
+          <img alt="" src="{{ image }}">
+        }
+      </div>
+
+    </div>
+
+  </dialog>
+
