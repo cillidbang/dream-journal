@@ -8,6 +8,11 @@
     </tr>
     </thead>
     <tbody>
+      @if (!journals$) {
+        <div>
+          Keine Daten verfügbar...
+        </div>
+      } @else {
         @for (entry of (journals$ | async); track $index) {
           <tr class="hover:border-purple-500" (click)="collapseRow(entry.id!)">
             <td>{{ entry.title }}</td>
@@ -17,10 +22,6 @@
                    ngSrc="/icon_edit.png" alt="" height="25" width="25">
               <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
                    ngSrc="/icon_delete.png" alt="" height="25" width="25" >
-              <img class="hover:cursor-pointer hover:border 1px solid black" height="25" width="25" (click)="generateImages(entry!)"
-                   ngSrc="/artificial-intelligence-ai-icon.png" alt="">
-              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="fetchImagesForPage(entry!)"
-                   ngSrc="/11698497.png" alt="" height="25" width="25">
             </td>
           </tr>
           <tr>
@@ -35,6 +36,8 @@
             }
           </tr>
         }
+      }
+
     </tbody>
   </table>
 </div>

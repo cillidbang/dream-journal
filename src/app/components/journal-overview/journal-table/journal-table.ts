@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnInit, inject} from '@angular/core';
 import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 
-import {Observable} from 'rxjs';
-import {ImageViewer} from '../../image-viewer/image-viewer';
+import { Observable } from 'rxjs';
 import {JournalPage} from '../../interfaces/journal-page';
 import {RestConnection} from '../../../services/rest-connection';
 
@@ -20,7 +19,6 @@ export class JournalTable implements OnInit{
   private rest: RestConnection = inject(RestConnection);
 
   @Input() diplayCreationForm: boolean | undefined;
-  @Input() imageViewer!: ImageViewer;
 
   @Output() editFormData: EventEmitter<JournalPage> = new EventEmitter();
 
@@ -28,12 +26,13 @@ export class JournalTable implements OnInit{
   extendedRowIdList: number[]  = [];
 
   ngOnInit() {
-    this.getJournals();
+    this.journals$ = this.getJournals();
   }
 
   editPage(id: number) {
-    this.journals$!.subscribe(pages => {
-      const page = pages.find(page => page.id === id);
+    if (this.journals$ == undefined) return;
+    this.journals$.subscribe(pages => {
+      const page = pages!.find(page => page.id === id);
       if (page) {
         this.showEditingForm(page);
       }
@@ -41,7 +40,7 @@ export class JournalTable implements OnInit{
   }
 
   private getJournals() {
-    this.journals$ = this.rest.getJournals();
+    return this.rest.getJournals();
   }
 
   protected delPage(id: number) {
@@ -49,16 +48,6 @@ export class JournalTable implements OnInit{
     window.location.reload();
   }
 
-  protected generateImages(page: JournalPage) {
-    this.rest.generateImagesForJournal(page).subscribe();
-  }
-
-  fetchImagesForPage(page:  JournalPage) {
-    this.rest.getImagesForJorunalId(page).subscribe(dbImages => {
-      this.imageViewer.images = dbImages.body.images;
-    });
-    this.imageViewer.open();
-  }
 
   collapseRow(id: number) {
     if (!id) return;

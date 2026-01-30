@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <app-journal-table class="flex justify-center" [imageViewer]="imageViewer!" (editFormData)="setPageToEdit($event)"  [diplayCreationForm]="showCreationForm">
+  <app-journal-table class="flex justify-center" (editFormData)="setPageToEdit($event)"  [diplayCreationForm]="showCreationForm">
 
   </app-journal-table>
 
@@ -27,5 +27,4 @@
                        [responseStatus] ="responseStatus"
                        [hidden]="!showToast">
   </app-message-toaster>
-  <app-image-viewer class="w-auto h-auto "#imageViewer></app-image-viewer>
 </div>

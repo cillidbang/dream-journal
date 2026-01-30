@@ -3,7 +3,6 @@ import {FormOperationAfterSubmit, JournalPage, SubmitOperation} from '../interfa
 import {RestConnection} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
 import {MessageToaster} from '../shared/message-toaster/message-toaster';
-import {ImageViewer} from '../image-viewer/image-viewer';
 import {JournalTable} from './journal-table/journal-table';
 
 
@@ -14,15 +13,13 @@ import {JournalTable} from './journal-table/journal-table';
     JournalDialog,
     JournalTable,
     MessageToaster,
-    ImageViewer,
   ],
-  templateUrl: './landing-page.html',
-  styleUrl: './landing-page.scss'
+  templateUrl: './journal-overview.component.html',
+  styleUrl: './journal-overview.component.scss'
 })
-export class LandingPage implements OnInit {
+export class JournalOverview implements OnInit {
 
   @ViewChild("dialogElement") dialog : ElementRef<HTMLDialogElement> | any;
-  @ViewChild("imageViewer") image : ElementRef<HTMLElement> | any;
 
   existingJournalPages: JournalPage[] = [];
   showCreationForm: boolean = false;
@@ -30,10 +27,7 @@ export class LandingPage implements OnInit {
   showToast: boolean = false;
   responseStatus: boolean = true;
 
-
-
   constructor(private rest: RestConnection) {}
-
 
   showMessageToaster(status: boolean) {
     this.showToast = status;

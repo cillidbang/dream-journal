@@ -1,0 +1,82 @@
+[
+  Array
+  :
+  [
+    {
+      "json": {
+        "id": "Label_2941467991736726237",
+        "name": "Bestellung",
+        "type": "user"
+      },
+      "pairedItem": {
+        "item": 0,
+        "input": 1
+      }
+    },
+    {
+      "json": {
+        "id": "Label_57",
+        "name": "Rechnungen",
+        "messageListVisibility": "show",
+        "labelListVisibility": "labelShow",
+        "type": "user"
+      },
+      "pairedItem": {
+        "item": 1,
+        "input": 1
+      }
+    },
+    {
+      "json": {
+        "id": "Label_58",
+        "name": "Newsletter",
+        "messageListVisibility": "show",
+        "labelListVisibility": "labelShow",
+        "type": "user"
+      },
+      "pairedItem": {
+        "item": 2,
+        "input": 1
+      }
+    },
+    {
+      "json": {
+        "id": "Label_59",
+        "name": "Werbung/Spam",
+        "messageListVisibility": "show",
+        "labelListVisibility": "labelShow",
+        "type": "user"
+      },
+      "pairedItem": {
+        "item": 3,
+        "input": 1
+      }
+    },
+    {
+      "json": {
+        "id": "Label_60",
+        "name": "Persönlich",
+        "messageListVisibility": "show",
+        "labelListVisibility": "labelShow",
+        "type": "user"
+      },
+      "pairedItem": {
+        "item": 4,
+        "input": 1
+      }
+    },
+    {
+      "json": {
+        "id": "Label_61",
+        "name": "Sonstige",
+        "messageListVisibility": "show",
+        "labelListVisibility": "labelShow",
+        "type": "user"
+      },
+      "pairedItem": {
+        "item": 5,
+        "input": 1
+      }
+    }
+  ]
+]
