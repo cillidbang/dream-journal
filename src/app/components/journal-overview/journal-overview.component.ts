@@ -4,6 +4,7 @@ import {RestConnection, ViewModel} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
 import {MessageToaster} from '../shared/message-toaster/message-toaster';
 import {JournalTable} from './journal-table/journal-table';
+import {Observable, timeout} from 'rxjs';
 
 
 
@@ -21,7 +22,8 @@ export class JournalOverview implements OnInit {
 
   @ViewChild("dialogElement") dialog : ElementRef<HTMLDialogElement> | any;
 
-  existingJournalPages: ViewModel | undefined;
+  journals$: Observable<ViewModel> | undefined;
+
   showCreationForm: boolean = false;
   dataForEditForm: JournalPage | undefined;
   showToast: boolean = false;
@@ -37,13 +39,12 @@ export class JournalOverview implements OnInit {
     }, 5000);
 
   }
-
   ngOnInit() {
-    this.getExistingJournalPages();
+    this.fetchAllJournals();
   }
-  showTagebuchForm() {
-    this.showCreationForm = true;
-    this.dialog.nativeElement.showModal();
+
+  protected fetchAllJournals() {
+    this.journals$ = this.rest.getJournals();
   }
 
   closeForm() {
@@ -53,28 +54,37 @@ export class JournalOverview implements OnInit {
   submitForm(submit: FormOperationAfterSubmit) {
     if (submit.operation === SubmitOperation.CREATE) {
       this.rest.addJournal(submit.page).subscribe(s => {
-        this.showMessageToaster(s.ok);
-        console.log(s.ok)
+        if (s != null) {
+          this.showMessageToaster(s.ok);
+        }
+        this.fetchAllJournals();
       });
     }
     else if (submit.operation === SubmitOperation.EDIT) {
       this.rest.editJournal(submit.page).subscribe(s => {
         this.showMessageToaster(s.ok);
+        this.fetchAllJournals();
       });
     }
     this.showCreationForm = false;
     this.dialog.nativeElement.close();
   }
 
-  setPageToEdit(pageToEdit: JournalPage) {
-    this.showTagebuchForm();
-    this.dataForEditForm = pageToEdit;
+  openFormular() {
+    this.showCreationForm = true;
+    this.dataForEditForm = {
+      title: '',
+      subtitle: '',
+      date: '',
+      content: ''
+    }
+    this.dialog.nativeElement.showModal();
   }
 
-  getExistingJournalPages() {
-    this.rest.getJournals().subscribe(data => {
-        this.existingJournalPages = data;
-    });
+  openEditFormular(pageToEdit: JournalPage) {
+    this.showCreationForm = true;
+    this.dataForEditForm = pageToEdit;
+    this.dialog.nativeElement.showModal();
   }
 
 }

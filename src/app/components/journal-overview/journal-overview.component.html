@@ -3,14 +3,18 @@
   <div class="h-[10%] w-full flex flex-row items-center justify-center p-3 mt-5">
     <div>
       <button class="p-2 mx-2 text-xl bg bg-purple-500 hover:bg-purple-700 text-white rounded-2xl w-40 text-center"
-              (click)="showTagebuchForm()">
+              (click)="openFormular()">
         + Anlegen
       </button>
     </div>
   </div>
 
-  <app-journal-table class="flex justify-center" (editFormData)="setPageToEdit($event)"  [diplayCreationForm]="showCreationForm">
-
+  <app-journal-table class="flex justify-center"
+                     (editFormData)="openEditFormular($event)"
+                     [diplayCreationForm]="showCreationForm"
+                     [journals$]="journals$"
+                     (refresh)="fetchAllJournals()"
+  >
   </app-journal-table>
 
   <div class="w-full h-full fixed z-15" [hidden]="!showCreationForm">

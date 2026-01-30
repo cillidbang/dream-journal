@@ -14,36 +14,32 @@ import {RestConnection, ViewModel} from '../../../services/rest-connection';
   templateUrl: './journal-table.html',
   styleUrl: './journal-table.scss'
 })
-export class JournalTable implements OnInit{
+export class JournalTable {
 
   private rest: RestConnection = inject(RestConnection);
 
   @Input() diplayCreationForm: boolean | undefined;
+  @Input() journals$: Observable<ViewModel> | undefined;
 
   @Output() editFormData: EventEmitter<JournalPage> = new EventEmitter();
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
 
-  journals$: Observable<ViewModel> | undefined;
+
   extendedRowIdList: number[]  = [];
 
-  ngOnInit() {
-    this.journals$ = this.rest.getJournals();
-  }
-
   protected _editPage(id: number) {
-
     if (this.journals$ == undefined) return;
-   /* this.journals$!.subscribe(pages => {
-      const page = pages!.find(page => page.id === id);
+    this.journals$.subscribe(pages => {
+      const page = pages.journals!.find(page => page.id === id);
       if (page) {
         this.showEditingForm(page);
       }
     });
-    */
   }
 
   protected delPage(id: number) {
     this.rest.deleteJournalById(id).subscribe(() => {
-      this.journals$ = this.rest.getJournals();
+      this.refresh.emit();
     });
   }
 

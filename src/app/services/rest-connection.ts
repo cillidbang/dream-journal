@@ -28,7 +28,7 @@ export class RestConnection {
   }
 
   addJournal(page: JournalPage): Observable<any> {
-    return this.httpClient.post<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE, page, {observe: "response"});
+    return this.httpClient.post<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE, page);
   }
 
   editJournal(page: JournalPage) : Observable<any> {

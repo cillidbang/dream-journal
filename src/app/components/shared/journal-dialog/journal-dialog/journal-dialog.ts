@@ -16,7 +16,7 @@ export class JournalDialog implements OnChanges {
     @Output() formSubmit: EventEmitter<FormOperationAfterSubmit> = new EventEmitter;
     @Output() closeForm: EventEmitter<boolean> = new EventEmitter;
 
-    editInDb: boolean = false;
+    editMode: boolean = false;
 
     inputValues: JournalPage | undefined = {
       title: "",
@@ -30,20 +30,19 @@ export class JournalDialog implements OnChanges {
       if (changes['pageToEditData']) {
         if (this.pageToEditData) {
           this.inputValues = this.pageToEditData;
-          this.editInDb = true;
+          this.editMode = true;
         }
       }
     }
 
     closeDialog() {
       this.closeForm.emit();
-      window.location.reload();
     }
 
     submitDialog() {
       this.inputValues!.date = new Date().toISOString();
 
-      if (this.editInDb) {
+      if (this.editMode) {
         this.formSubmit.emit({page: this.inputValues!, operation: SubmitOperation.EDIT});
       }
       else {
