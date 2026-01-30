@@ -8,36 +8,39 @@
     </tr>
     </thead>
     <tbody>
-      @if (!(journals$ | async)) {
-        <div>
-          Keine Daten verfügbar...
-        </div>
-      } @else {
-        @for (entry of (journals$ | async); track $index) {
-          <tr class="hover:border-purple-500" (click)="collapseRow(entry.id!)">
-            <td>{{ entry.title }}</td>
-            <td class="text-center">{{ formatDate(entry.date) }}</td>
-            <td class="flex flex-row justify-center">
-              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="_editPage(entry.id!)"
-                   ngSrc="/icon_edit.png" alt="" height="25" width="25">
-              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
-                   ngSrc="/icon_delete.png" alt="" height="25" width="25" >
-            </td>
-          </tr>
-          <tr>
-            @if (isNotCollapsed(entry.id!)) {
-              <td colspan="3" class="bg-gray-100">
-                <p class="text-center text-2xl text-purple-500">{{ entry.title }}</p>
-                <br>
-                <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
-                <br>
-                <p class="p-5">{{ entry.content }}</p>
+      @if (journals$ | async; as journal) {
+        @if (journal.loading) {
+          <div>Lade Daten...</div>
+        }
+        @else if (journal.journals.length <= 0) {
+          <div>Keine Daten...</div>
+        }
+        @else {
+          @for (entry of journal.journals; track $index) {
+            <tr class="hover:border-purple-500" (click)="collapseRow(entry.id!)">
+              <td>{{ entry.title }}</td>
+              <td class="text-center">{{ formatDate(entry.date) }}</td>
+              <td class="flex flex-row justify-center">
+                <img class="hover:cursor-pointer hover:border 1px solid black" (click)="_editPage(entry.id!)"
+                     ngSrc="/icon_edit.png" alt="" height="25" width="25">
+                <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
+                     ngSrc="/icon_delete.png" alt="" height="25" width="25" >
               </td>
-            }
-          </tr>
+            </tr>
+            <tr>
+              @if (isNotCollapsed(entry.id!)) {
+                <td colspan="3" class="bg-gray-100">
+                  <p class="text-center text-2xl text-purple-500">{{ entry.title }}</p>
+                  <br>
+                  <p class="text-l text-gray-400">{{ entry.subtitle }}</p>
+                  <br>
+                  <p class="p-5">{{ entry.content }}</p>
+                </td>
+              }
+            </tr>
+          }
         }
       }
-
     </tbody>
   </table>
 </div>

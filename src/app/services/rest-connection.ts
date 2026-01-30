@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {JournalPage} from '../components/interfaces/journal-page';
-import {catchError, observable, Observable, of, timeout} from 'rxjs';
+import {catchError, map, Observable, of, startWith} from 'rxjs';
+
+export type ViewModel = {
+  loading: boolean;
+  error: string | null;
+  journals: JournalPage[];
+};
 
 @Injectable({
   providedIn: 'root'
@@ -10,22 +16,14 @@ export class RestConnection {
 
   BASE_URL: string = "http://localhost:8080";
   JOURNAL_DIRECTIVE: string = "/journal";
-  IMAGE_DIRECTIVE: string = "/image";
-
-
   constructor(private httpClient: HttpClient) { }
 
-  getJournals(): Observable<JournalPage[] | null> {
+  getJournals(): Observable<ViewModel> {
       const url = this.BASE_URL + this.JOURNAL_DIRECTIVE;
       return this.httpClient.get<JournalPage[]>(url).pipe(
-
-        catchError(err => {
-
-          console.log("FETCH FAILD: " + err);
-          return of(null);
-
-        })
-
+        map(journals => ({ loading: false, error: null, journals })), // Erfolg
+        startWith({ loading: true, error: null, journals: [] }),      // Start-Zustand
+        catchError(err => of({ loading: false, error: err.message, journals: [] })) // Fehler
       );
   }
 
@@ -40,12 +38,4 @@ export class RestConnection {
   deleteJournalById(id: number | undefined) : Observable<any> {
     return this.httpClient.delete<JournalPage>(this.BASE_URL + this.JOURNAL_DIRECTIVE + `/${id}`, {observe: "response"});
   }
-
-  generateImagesForJournal(page: JournalPage) {
-    return this.httpClient.post<String>(this.BASE_URL + this.IMAGE_DIRECTIVE, page, {observe: "response"});
-  }
-  getImagesForJorunalId(page: JournalPage) {
-    return this.httpClient.get<any>(this.BASE_URL + this.IMAGE_DIRECTIVE + `/${page.id!}`, {observe: "response"});
-  }
-
 }

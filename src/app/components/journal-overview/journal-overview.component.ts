@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormOperationAfterSubmit, JournalPage, SubmitOperation} from '../interfaces/journal-page';
-import {RestConnection} from '../../services/rest-connection';
+import {RestConnection, ViewModel} from '../../services/rest-connection';
 import {JournalDialog} from '../shared/journal-dialog/journal-dialog/journal-dialog';
 import {MessageToaster} from '../shared/message-toaster/message-toaster';
 import {JournalTable} from './journal-table/journal-table';
@@ -21,7 +21,7 @@ export class JournalOverview implements OnInit {
 
   @ViewChild("dialogElement") dialog : ElementRef<HTMLDialogElement> | any;
 
-  existingJournalPages: JournalPage[] | null = [];
+  existingJournalPages: ViewModel | undefined;
   showCreationForm: boolean = false;
   dataForEditForm: JournalPage | undefined;
   showToast: boolean = false;

@@ -3,7 +3,7 @@ import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 
 import { Observable } from 'rxjs';
 import {JournalPage} from '../../interfaces/journal-page';
-import {RestConnection} from '../../../services/rest-connection';
+import {RestConnection, ViewModel} from '../../../services/rest-connection';
 
 @Component({
   selector: 'app-journal-table',
@@ -22,30 +22,29 @@ export class JournalTable implements OnInit{
 
   @Output() editFormData: EventEmitter<JournalPage> = new EventEmitter();
 
-  journals$: Observable<JournalPage[] | null> | undefined;
+  journals$: Observable<ViewModel> | undefined;
   extendedRowIdList: number[]  = [];
 
   ngOnInit() {
-    this.journals$ = this.getJournals();
+    this.journals$ = this.rest.getJournals();
   }
 
   protected _editPage(id: number) {
+
     if (this.journals$ == undefined) return;
-    this.journals$.subscribe(pages => {
+   /* this.journals$!.subscribe(pages => {
       const page = pages!.find(page => page.id === id);
       if (page) {
         this.showEditingForm(page);
       }
     });
-  }
-
-  private getJournals() {
-    return this.rest.getJournals();
+    */
   }
 
   protected delPage(id: number) {
-    this.rest.deleteJournalById(id).subscribe();
-
+    this.rest.deleteJournalById(id).subscribe(() => {
+      this.journals$ = this.rest.getJournals();
+    });
   }
 
 
