@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {JournalPage} from '../components/interfaces/journal-page';
-import {catchError, Observable, of, timeout} from 'rxjs';
+import {catchError, observable, Observable, of, timeout} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,18 @@ export class RestConnection {
 
   constructor(private httpClient: HttpClient) { }
 
-  getJournals(): Observable<JournalPage[]> {
+  getJournals(): Observable<JournalPage[] | null> {
       const url = this.BASE_URL + this.JOURNAL_DIRECTIVE;
-      return this.httpClient.get<JournalPage[]>(url);
+      return this.httpClient.get<JournalPage[]>(url).pipe(
+
+        catchError(err => {
+
+          console.log("FETCH FAILD: " + err);
+          return of(null);
+
+        })
+
+      );
   }
 
   addJournal(page: JournalPage): Observable<any> {

@@ -22,14 +22,14 @@ export class JournalTable implements OnInit{
 
   @Output() editFormData: EventEmitter<JournalPage> = new EventEmitter();
 
-  journals$: Observable<JournalPage[]> | undefined;
+  journals$: Observable<JournalPage[] | null> | undefined;
   extendedRowIdList: number[]  = [];
 
   ngOnInit() {
     this.journals$ = this.getJournals();
   }
 
-  editPage(id: number) {
+  protected _editPage(id: number) {
     if (this.journals$ == undefined) return;
     this.journals$.subscribe(pages => {
       const page = pages!.find(page => page.id === id);
@@ -45,11 +45,11 @@ export class JournalTable implements OnInit{
 
   protected delPage(id: number) {
     this.rest.deleteJournalById(id).subscribe();
-    window.location.reload();
+
   }
 
 
-  collapseRow(id: number) {
+  protected collapseRow(id: number) {
     if (!id) return;
     if (this.extendedRowIdList.includes(id)) {
       const i = this.extendedRowIdList.indexOf(id);
@@ -60,7 +60,7 @@ export class JournalTable implements OnInit{
     }
   }
 
-  isNotCollapsed(id: number) {
+  protected isNotCollapsed(id: number) {
     return this.extendedRowIdList.includes(id);
   }
 

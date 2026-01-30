@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-      @if (!journals$) {
+      @if (!(journals$ | async)) {
         <div>
           Keine Daten verfügbar...
         </div>
@@ -18,7 +18,7 @@
             <td>{{ entry.title }}</td>
             <td class="text-center">{{ formatDate(entry.date) }}</td>
             <td class="flex flex-row justify-center">
-              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="editPage(entry.id!)"
+              <img class="hover:cursor-pointer hover:border 1px solid black" (click)="_editPage(entry.id!)"
                    ngSrc="/icon_edit.png" alt="" height="25" width="25">
               <img class="hover:cursor-pointer hover:border 1px solid black" (click)="delPage(entry.id!)"
                    ngSrc="/icon_delete.png" alt="" height="25" width="25" >

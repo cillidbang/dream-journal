@@ -21,7 +21,7 @@ export class JournalOverview implements OnInit {
 
   @ViewChild("dialogElement") dialog : ElementRef<HTMLDialogElement> | any;
 
-  existingJournalPages: JournalPage[] = [];
+  existingJournalPages: JournalPage[] | null = [];
   showCreationForm: boolean = false;
   dataForEditForm: JournalPage | undefined;
   showToast: boolean = false;
